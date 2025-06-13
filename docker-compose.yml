@@ -18,21 +18,18 @@ services:
       - PORT=3000
       - NATS_SERVERS=nats://nats-servers:4222
 
-  medical-record-ms:
-    depends_on:
-      - medical-record-db
-    build: ./medical-record-ms
+  auth-ms:
+    build: ./auth-ms
     volumes:
-      - ./medical-record-ms/src:/usr/src/app/src
+      - ./auth-ms/src:/usr/src/app/src
     command: npm run start:dev
     environment:
-      - PORT=3002
-      - DATABASE_URL=postgresql://postgres:password@medical_record_database:5432/medical_record_db?schema=public
+      - PORT=3004
       - NATS_SERVERS=nats://nats-servers:4222
+      - DATABASE_URL=postgresql://postgres:password@auth_database:5432/auth_db?schema=public
 
-
-  medical-record-db:
-    container_name: medical_record_database
+  auth-db:
+    container_name: auth_database
     image: postgres:16.2
     restart: always
     volumes:
@@ -42,4 +39,32 @@ services:
     environment:
       - POSTGRES_USER=postgres
       - POSTGRES_PASSWORD=password
-      - POSTGRES_DB=medical_record_db
+      - POSTGRES_DB=auth_db
+
+
+
+#   medical-record-ms:
+#     depends_on:
+#       - medical-record-db
+#     build: ./medical-record-ms
+#     volumes:
+#       - ./medical-record-ms/src:/usr/src/app/src
+#     command: npm run start:dev
+#     environment:
+#       - PORT=3002
+#       - DATABASE_URL=postgresql://postgres:password@medical_record_database:5432/medical_record_db?schema=public
+#       - NATS_SERVERS=nats://nats-servers:4222
+
+
+#  medical-record-db:
+   #  container_name: medical_record_database
+    # image: postgres:16.2
+#     restart: always
+#     volumes:
+#       - ./postgres:/var/lib/postgresql/data 
+#     ports:
+#       - 5432:5432
+#     environment:
+#       - POSTGRES_USER=postgres
+#       - POSTGRES_PASSWORD=password
+#       - POSTGRES_DB=medical_record_db
