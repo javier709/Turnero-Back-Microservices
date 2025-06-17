@@ -27,6 +27,7 @@ services:
       - PORT=3004
       - NATS_SERVERS=nats://nats-servers:4222
       - DATABASE_URL=postgresql://postgres:password@auth_database:5432/auth_db?schema=public
+      - JWT_SECRET=${JWT_SECRET}
 
   auth-db:
     container_name: auth_database
