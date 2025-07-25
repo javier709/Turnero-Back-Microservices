@@ -28,6 +28,11 @@ services:
       - NATS_SERVERS=nats://nats-servers:4222
       - DATABASE_URL=postgresql://postgres:password@auth_database:5432/auth_db?schema=public
       - JWT_SECRET=${JWT_SECRET}
+      - MAIL_HOST=${MAIL_HOST}
+      - MAIL_PORT=${MAIL_PORT}
+      - MAIL_USER=${MAIL_USER}
+      - MAIL_PASS=${MAIL_PASS}
+      - FRONTEND_URL=${FRONTEND_URL}
 
   auth-db:
     container_name: auth_database
